@@ -575,7 +575,7 @@ function clickElement(node) {
 
 function showNotFoundedValue(node, values) {
 	const notFoundValueNode = document.createElement('div')
-	notFoundValueNode.style.cssText = `background: #d0d0d0; padding: 5px; width: fit-content; border-radius: 5px; margin-bottom: 5px;`
+	notFoundValueNode.style.cssText = `background: ${notAddedColor}; padding: 5px; width: fit-content; border-radius: 5px; margin-bottom: 5px;`
 	notFoundValueNode.innerHTML = `<b>Copydeck value:</b> ${values.join(' ')}`
 	node.prepend(notFoundValueNode)
 }
