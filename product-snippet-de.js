@@ -39,7 +39,7 @@ const config = JSON.parse(configJSON)
  *Snippet GUI start
  */
 const addedColor = '#f2ffe4'
-const notAddedColor = '#ffb88a'
+const notAddedColor = '#ffe2d0'
 
 const bodyNode = document.querySelector('body')
 const headNode = document.querySelector('head')
@@ -272,7 +272,6 @@ async function parseDataToArray() {
 	}
 
 	copydeckData = copydeckAllData[0]
-	console.log(copydeckData)
 }
 
 async function initFields(fields) {
@@ -418,10 +417,7 @@ async function editSelect(node, values) {
 	}
 
 	if (!matchFound) {
-		const notFoundValueNode = document.createElement('div')
-		notFoundValueNode.style.cssText = `background: #d0d0d0; padding: 10px; width: fit-content; border-radius: 0 0 5px 5px;`
-		notFoundValueNode.innerHTML = `<b>Copydeck value:</b> ${values.join(' ')}`
-		node.append(notFoundValueNode)
+		showNotFoundedValue(node, values)
 	}
 }
 
@@ -454,12 +450,14 @@ async function editSelectsGroup(node, values, numberOfFields = values.length) {
 
 	const callback = async function (mutationsList) {
 		for (const mutation of mutationsList) {
-			if (
-				mutation.type === 'childList' &&
-				mutation.target.classList.contains('shs-widget-container')
-			) {
-				let value = values[valueIndex] ? values[valueIndex] : '- None -'
-				await editSelect(mutation.target, value)
+			const nodeExist = mutation.addedNodes[0]
+				? mutation.addedNodes[0].classList.contains('shs-select')
+				: false
+
+			if (mutation.type === 'childList' && nodeExist) {
+				if (values[valueIndex]) {
+					await editSelect(mutation.target, values[valueIndex])
+				}
 				valueIndex++
 			}
 		}
@@ -476,8 +474,9 @@ async function editSelectsGroup(node, values, numberOfFields = values.length) {
 		}
 	} else {
 		for (const [index, container] of selectContainers.entries()) {
-			let value = values[index] ? values[index] : '- None -'
-			await editSelect(container, value)
+			if (values[index]) {
+				await editSelect(container, values[index])
+			}
 		}
 	}
 }
@@ -488,11 +487,12 @@ async function editSelectsGroup(node, values, numberOfFields = values.length) {
 async function editCheckbox(node, values, numberOfFields = values.length) {
 	let buttons = node.querySelectorAll('input.form-checkbox')
 	let numberOfChecked = 0
+	let matchFound = false
 
 	for (const button of buttons) {
 		button.checked = false
 		let label = button.parentElement.querySelector('label').innerText
-		if (numberOfChecked < numberOfFields) {
+		if (numberOfChecked < numberOfFields && values.length > 0) {
 			for (const value of values) {
 				let flag =
 					value.filter((val) => label.toLowerCase().includes(val.toLowerCase()))
@@ -501,9 +501,14 @@ async function editCheckbox(node, values, numberOfFields = values.length) {
 				if (flag) {
 					button.checked = true
 					numberOfChecked++
+					matchFound = true
 				}
 			}
 		}
+	}
+
+	if (!matchFound) {
+		showNotFoundedValue(node, values)
 	}
 }
 
@@ -562,6 +567,17 @@ function clickElement(node) {
 		null
 	)
 	node.dispatchEvent(evt)
+}
+
+/**
+ *Function shows not founded value
+ **/
+
+function showNotFoundedValue(node, values) {
+	const notFoundValueNode = document.createElement('div')
+	notFoundValueNode.style.cssText = `background: #d0d0d0; padding: 5px; width: fit-content; border-radius: 5px; margin-bottom: 5px;`
+	notFoundValueNode.innerHTML = `<b>Copydeck value:</b> ${values.join(' ')}`
+	node.prepend(notFoundValueNode)
 }
 
 /*
@@ -739,26 +755,21 @@ function productOverviewFormatter() {
 }
 
 function ingredientsAndNutritionFormatter() {
-	const copydeckIngredients = copydeckData[95]
-	const copydeckNutritionAnalyticalConstituents = copydeckData[98]
-	const copydeckIngredientsNutritionalAdditives = copydeckData[101]
+	const copydeckIngredients = copydeckData[95].trim()
+		? copydeckData[95].replace(/["♥]/gi, '')
+		: ''
+	const copydeckNutritionAnalyticalConstituents = copydeckData[98].trim()
+		? copydeckData[98].replace(/["♥]/gi, '')
+		: ''
+	const copydeckIngredientsNutritionalAdditives = copydeckData[101].trim()
+		? copydeckData[101].replace(/["♥]/gi, '')
+		: ''
 
-	if (copydeckIngredients) {
-		return [
-			`<p><strong>Zutaten</strong></p><p>${copydeckIngredients.replace(
-				/(<([^>]+)>)/gi,
-				''
-			)}</p>`,
-			`<p><strong>Analytische Bestandteile</strong></p><p>${copydeckNutritionAnalyticalConstituents.replace(
-				/(<([^>]+)>)/gi,
-				''
-			)}</p>
-				<p><strong>Ernährungsphysiologische Zusatzstoffe</strong></p><p>${copydeckIngredientsNutritionalAdditives.replace(
-					/(<([^>]+)>)/gi,
-					''
-				)}</p>`,
-		]
-	}
+	return [
+		`<p><strong>Zutaten</strong></p><p>${copydeckIngredients}</p>`,
+		`<p><strong>Analytische Bestandteile</strong></p><p>${copydeckNutritionAnalyticalConstituents}</p>
+		<p><strong>Ernährungsphysiologische Zusatzstoffe</strong></p><p>${copydeckIngredientsNutritionalAdditives}</p>`,
+	]
 }
 
 function feedingGuideFormatter() {
@@ -800,22 +811,45 @@ function lifestagesFormatter() {
 }
 
 function ingredientsFormatter() {
-	return [['Chicken', 'Dog']]
+	const ingredients = copydeckData[48].split(',')
+	const copydeckPetType = copydeckData[31]
+
+	let data = []
+
+	for (const ingredient of ingredients) {
+		if (ingredient.trim().length > 0) {
+			data.push([ingredient.trim(), copydeckPetType])
+		}
+	}
+
+	return data
 }
 
 function conditionsFormatter() {
-	return [['Brain', 'Dog']]
+	const conditions = copydeckData[51].trim()
+	const copydeckPetType = copydeckData[31]
+
+	return conditions.trim() && copydeckPetType.trim()
+		? [[conditions, copydeckPetType]]
+		: [['- None -']]
 }
 
 function specialNeedsFormatter() {
-	return [['Dental', 'Cat']]
+	const specialNeeds = copydeckData[54].trim()
+	const copydeckPetType = copydeckData[31]
+
+	return specialNeeds.trim() && copydeckPetType.trim()
+		? [[specialNeeds, copydeckPetType]]
+		: [['- None -']]
 }
 
 function rangesFormatter() {
-	const copydeckRange = copydeckData[39]
+	const copydeckRange = copydeckData[39].trim()
 	const copydeckBrand = copydeckData[30]
 
-	return [[copydeckRange, copydeckBrand]]
+	return copydeckRange.trim() && copydeckBrand.trim()
+		? [[copydeckRange, copydeckBrand]]
+		: []
 }
 
 /*SEO FORMATTERS */
