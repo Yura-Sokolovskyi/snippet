@@ -777,7 +777,7 @@ function feedingGuideFormatter() {
 
 	return [
 		`<p><strong>Fütterungs­empfehlung</strong></p><p>${copydeckIngredients.replace(
-			/(<([^>]+)>)/gi,
+			/["♥]/gi,
 			''
 		)}</p>`,
 	]
