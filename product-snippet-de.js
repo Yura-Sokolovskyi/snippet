@@ -717,25 +717,17 @@ function productSizeFormatter() {
 }
 
 function productOverviewFormatter() {
+	const copydeckProdDesc1 = copydeckData[61].trim()
+	const copydeckProdDesc2 = copydeckData[62].trim()
+
 	const firstHighlightIndex = 65
 	const lastHighlightIndex = 92
 
-	let featuresTop = [[], []]
-	let featuresBottom = [[], []]
+	let features = [[], []]
+	let descriptions = [[], []]
 
 	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
-		featuresTop[0].length < 4
-			? pushFeatures(featuresTop, copydeckData[i])
-			: pushFeatures(featuresBottom, copydeckData[i])
-	}
-
-	function pushFeatures(features, val) {
-		if (val.length > 3) {
-			let splitedFeature = val.split(/([*][A-Za-z])/gm)
-
-			features[0].push(splitedFeature[0].replace(/["\n]/gm, ''))
-			features[1].push(splitedFeature.slice(1).join('').replace(/["\n]/gm, ''))
-		}
+		separateDescription(copydeckData[i], features)
 	}
 
 	function buildDescription(descArr) {
@@ -754,21 +746,35 @@ function productOverviewFormatter() {
 			: ''
 	}
 
-	let firstBlock = `<p><strong>Merkmale</strong></p> <ul><li>${featuresTop[0]
+	let firstBlock = `<p><strong>Merkmale</strong></p> <ul><li>${features[0]
 		.map((f) => {
 			return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
 		})
-		.join('</li><li>')}</li></ul>${buildDescription(featuresTop)}`
-	let secondtBlock =
-		featuresBottom[0].length > 0
-			? `<p>${featuresBottom[0]
-					.map((f) => {
-						return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
-					})
-					.join('</p><p>')}</p>${buildDescription(featuresBottom)}`
-			: ''
+		.join('</li><li>')}</li></ul>${buildDescription(features)}`
 
-	return [firstBlock, secondtBlock]
+	if (copydeckProdDesc1.length > 5) {
+		separateDescription(copydeckProdDesc1, descriptions)
+	}
+
+	if (copydeckProdDesc2.length > 5) {
+		separateDescription(copydeckProdDesc2, descriptions)
+	}
+
+	let secondBlock = `<p>${descriptions[0]
+		.map((e) => {
+			return e.split()[e.length - 1] !== '.' ? `${e.trim()}.` : f
+		})
+		.join(' ')}</p>${buildDescription(descriptions)}`
+
+	function separateDescription(val, arr) {
+		if (val.length > 3) {
+			let splittedFeature = val.split(/([*][A-Za-z])/gm)
+			arr[0].push(splittedFeature[0].replace(/["\n]/gm, ''))
+			arr[1].push(splittedFeature.slice(1).join('').replace(/["\n]/gm, ''))
+		}
+	}
+
+	return [firstBlock, secondBlock]
 }
 
 function ingredientsAndNutritionFormatter() {
