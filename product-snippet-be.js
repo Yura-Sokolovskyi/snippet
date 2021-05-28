@@ -58,7 +58,6 @@ const snippetGoBtn = document.createElement('button')
 
 const snippetLoaderContainer = document.createElement('div')
 const snippetLoader = document.createElement('div')
-const snippetLoaderMessage = document.createElement('div')
 const loaderStyle = document.createElement('style')
 
 const snippetPageView = document.createElement('iframe')
@@ -128,15 +127,11 @@ loaderStyle.innerHTML = `.loader,
   }
 }`
 
-snippetLoaderMessage.innerHTML = 'some message'
-
 headNode.append(loaderStyle)
 
 snippetLoaderContainer.style.cssText = `position: absolute; height: 100%; width: 100%;
 											 background-color: #e81c24; display:none; align-items: center;
-											 justify-content: center; flex-direction: column;`
-
-snippetLoaderMessage.style.cssText = `color: #ffffff;`
+											 justify-content: center;`
 
 const snippetBtnStyle =
 	'outline: none; border: 0; border-radius: 20px; color: white; margin: 0 5px; line-height: 10px; outline: none;'
@@ -200,7 +195,6 @@ snippetBtnContainer.append(
 snippetNavContainer.append(snippetUrl)
 snippetNavContainer.append(snippetGoBtn)
 snippetLoaderContainer.append(snippetLoader)
-snippetLoaderContainer.append(snippetLoaderMessage)
 
 snippetMainContainer.append(snippetControlContainer)
 snippetMainContainer.append(snippetNavContainer)
@@ -290,11 +284,6 @@ async function initFields(fields) {
 
 async function editFields(fields) {
 	for (const field of fields) {
-		snippetLoaderMessage.innerHTML = `Editing ${field[0].replace(
-			/[A-Z]/gm,
-			(letter) => ` ${letter.toLowerCase()}`
-		)} block ...`
-
 		await eval(
 			`${field[2]}(${field[0]}Node,${field[0]}Formatter()${
 				field.length === 4 ? ',' + field[3] : ''
@@ -640,7 +629,7 @@ function GTINFormatter() {
 }
 
 function buyNowFusepumpFormatter() {
-	const copydeckBuyNowFusepump = copydeckData[24]
+	const copydeckBuyNowFusepump = copydeckData[25]
 
 	if (copydeckBuyNowFusepump.trim()) {
 		return copydeckBuyNowFusepump.trim().length > 3
