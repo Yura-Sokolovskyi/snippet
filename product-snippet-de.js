@@ -677,8 +677,14 @@ function highlightsFormatter() {
 	let highlights = []
 
 	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
+		const highlight = copydeckData[i]
+			.split(/([*][A-Za-z])/gm)[0]
+			.replace(/["\n]/gm, '')
+
 		highlights.push(
-			copydeckData[i].split(/([*][A-Za-z])/gm)[0].replace(/["\n]/gm, '')
+			highlight.split()[highlight.length - 1] !== '.'
+				? `${highlight.trim()}.`
+				: highlight
 		)
 	}
 
