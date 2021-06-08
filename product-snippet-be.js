@@ -1,4 +1,4 @@
-const configJSON1 = `{
+const configJSON = `{
 	"customFields":[
 	  ["internalTitle","getElementById('edit-title-wrapper')","editInput"],
 	  ["externalTitle","getElementById('edit-field-product-label-wrapper')","editInput"],
@@ -20,22 +20,6 @@ const configJSON1 = `{
 	  ["conditions","getElementById('edit-field-product-condition-wrapper')","editSelectsGroup"],
 	  ["specialNeeds","getElementById('edit-field-product-special-need-wrapper')","editSelectsGroup"],
 	  ["ranges","getElementById('edit-field-product-range-wrapper')","editCheckbox"]
-	],
-	"seoFields":[
-	  ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
-	  ["pageDescription","getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editSeoField"],
-	  ["openGraphTitle","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editSeoField"],
-	  ["openGraphDescription","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editSeoField"],
-	  ["urlAlias","getElementsByClassName('form-item-path-0-alias')[0]","editSeoField"]
-	],
-	"copydeck":{
-	  "test":"some value"
-	}
- }`
-
-const configJSON = `{
-	"customFields":[
-	  ["internalTitle","getElementById('edit-title-wrapper')","editInput"]
 	],
 	"seoFields":[
 	  ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
@@ -194,11 +178,11 @@ snippetGoBtn.style.cssText = `border-radius: 0 20px 20px 0; padding:  5px 20px; 
 snippetInput.style.cssText = `width: 400px; border-radius:  20px; resize: none; padding: 4px 10px; outline: none; background-color: #0f0f0f;
 										 border: 1px solid #00385a; color: #fff;`
 
-snippetPageView.setAttribute(
-	'src',
-	'https://live-74999-petcare-purinattt-belgium.pantheonsite.io/nl/node/5016/edit'
-)
-/*snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)*/
+/*snippetPageView.setAttribute(
+	 'src',
+	 'https://dev-74941-petcare-purinattt-germany.pantheonsite.io/node/9937/edit'
+ )*/
+snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)
 
 snippetUrl.value = 'URL'
 snippetGoBtn.innerHTML = 'GO'
@@ -248,60 +232,74 @@ snippetGoBtn.addEventListener('click', () => {
  *Snippet Add Product logic start
  */
 
+let initCustomFieldsFlag = false
+let initSeoFieldsFlag = false
+
 snippetPageView.addEventListener('load', () => {
 	snippetUrl.value = snippetPageView.contentWindow.location.href
+	initCustomFieldsFlag = false
+	initSeoFieldsFlag = false
 })
 
 snippetPageView.addEventListener('click', () => {
 	snippetUrl.value = snippetPageView.contentWindow.location.href
+	initCustomFieldsFlag = false
+	initSeoFieldsFlag = false
 })
 
 snippetAddCustomBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.customFields)
+	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initCustomFieldsFlag = true
 })
 
 snippetAddSeoBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.seoFields)
+	await initFields(config.seoFields, initSeoFieldsFlag)
 	await editFields(config.seoFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initSeoFieldsFlag = true
 })
 
 snippetAddAllBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.customFields)
+	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
-	await initFields(config.seoFields)
+	await initFields(config.seoFields, initSeoFieldsFlag)
 	await editFields(config.seoFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initCustomFieldsFlag = true
+	initSeoFieldsFlag = true
 })
 
 let copydeckAllData = []
 let copydeckData = []
 
 async function parseDataToArray() {
+	copydeckAllData = []
+
 	for await (const column of snippetInput.value.split('	\n')) {
 		copydeckAllData.push(column.split('\t'))
 	}
 
 	copydeckData = copydeckAllData[0]
-	console.log(copydeckData)
 }
 
-async function initFields(fields) {
-	for (const field of fields) {
-		await eval(
-			`${field[0]}Node = snippetPageView.contentWindow.document.${field[1]}`
-		)
+async function initFields(fields, flag) {
+	if (!flag) {
+		for (const field of fields) {
+			await eval(
+				`${field[0]}Node = snippetPageView.contentWindow.document.${field[1]}`
+			)
+		}
 	}
 }
 
@@ -626,8 +624,8 @@ function internalTitleFormatter() {
 }
 
 function externalTitleFormatter() {
-	const copydeckTitle = copydeckData[6]
-	const copydeckBrand = copydeckData[22]
+	const copydeckTitle = copydeckData[7]
+	const copydeckBrand = copydeckData[30]
 
 	if (copydeckTitle && copydeckBrand) {
 		const length = copydeckTitle
@@ -653,7 +651,7 @@ function bazaavoiceProductIDFormatter() {
 }
 
 function GTINFormatter() {
-	return copydeckData[13] ? copydeckData[13] : ''
+	return copydeckData[17] ? copydeckData[17] : ''
 }
 
 function buyNowFusepumpFormatter() {
