@@ -237,10 +237,14 @@ let initSeoFieldsFlag = false
 
 snippetPageView.addEventListener('load', () => {
 	snippetUrl.value = snippetPageView.contentWindow.location.href
+	initCustomFieldsFlag = false
+	initSeoFieldsFlag = false
 })
 
 snippetPageView.addEventListener('click', () => {
 	snippetUrl.value = snippetPageView.contentWindow.location.href
+	initCustomFieldsFlag = false
+	initSeoFieldsFlag = false
 })
 
 snippetAddCustomBtn.addEventListener('click', async function () {
