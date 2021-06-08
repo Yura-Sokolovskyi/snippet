@@ -1,37 +1,53 @@
+const configJSON1 = `{
+	"customFields":[
+	  ["internalTitle","getElementById('edit-title-wrapper')","editInput"],
+	  ["externalTitle","getElementById('edit-field-product-label-wrapper')","editInput"],
+	  ["bazaavoiceProductID","getElementById('edit-field-product-bv-id-wrapper')","editInput"],
+	  ["GTIN","getElementById('edit-field-dsu-sku-wrapper')","editInput"],
+	  ["buyNowFusepump","getElementById('edit-field-product-fusepump-wrapper')","editInput"],
+	  ["newsletter","getElementById('edit-field-product-newsletter-wrapper')","editSelect"],
+	  ["headLine","getElementById('edit-field-product-headline-wrapper')","editInput"],
+	  ["highlights","getElementById('edit-field-product-highlight-wrapper')","editInputsGroup",4],
+	  ["productSize","getElementById('edit-field-product-size-wrapper')","editInputsGroup"],
+	  ["productOverview","getElementById('edit-group-product-detail')","editEditorsGroup"],
+	  ["ingredientsAndNutrition","getElementById('edit-field-product-nutrition-wrapper')","editEditorsGroup"],
+	  ["feedingGuide","getElementById('edit-field-product-feeding-guide-wrapper')","editEditorsGroup"],
+	  ["petType","getElementById('edit-field-product-pet-type-wrapper')","editRadioBtn"],
+	  ["brand","getElementById('edit-field-product-brand-wrapper')","editSelect"],
+	  ["categories","getElementById('edit-field-product-category-wrapper')","editSelectsGroup"],
+	  ["lifestages","getElementById('edit-field-product-lifestage-wrapper')","editSelectsGroup"],
+	  ["ingredients","getElementById('edit-field-product-ingredient-wrapper')","editSelectsGroup"],
+	  ["conditions","getElementById('edit-field-product-condition-wrapper')","editSelectsGroup"],
+	  ["specialNeeds","getElementById('edit-field-product-special-need-wrapper')","editSelectsGroup"],
+	  ["ranges","getElementById('edit-field-product-range-wrapper')","editCheckbox"]
+	],
+	"seoFields":[
+	  ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
+	  ["pageDescription","getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editSeoField"],
+	  ["openGraphTitle","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editSeoField"],
+	  ["openGraphDescription","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editSeoField"],
+	  ["urlAlias","getElementsByClassName('form-item-path-0-alias')[0]","editSeoField"]
+	],
+	"copydeck":{
+	  "test":"some value"
+	}
+ }`
+
 const configJSON = `{
-  "customFields":[
-	 ["internalTitle","getElementById('edit-title-wrapper')","editInput"],
-	 ["externalTitle","getElementById('edit-field-product-label-wrapper')","editInput"],
-	 ["bazaavoiceProductID","getElementById('edit-field-product-bv-id-wrapper')","editInput"],
-	 ["GTIN","getElementById('edit-field-dsu-sku-wrapper')","editInput"],
-	 ["buyNowFusepump","getElementById('edit-field-product-fusepump-wrapper')","editInput"],
-	 ["newsletter","getElementById('edit-field-product-newsletter-wrapper')","editSelect"],
-	 ["headLine","getElementById('edit-field-product-headline-wrapper')","editInput"],
-	 ["highlights","getElementById('edit-field-product-highlight-wrapper')","editInputsGroup",4],
-	 ["productSize","getElementById('edit-field-product-size-wrapper')","editInputsGroup"],
-	 ["productOverview","getElementById('edit-group-product-detail')","editEditorsGroup"],
-	 ["ingredientsAndNutrition","getElementById('edit-field-product-nutrition-wrapper')","editEditorsGroup"],
-	 ["feedingGuide","getElementById('edit-field-product-feeding-guide-wrapper')","editEditorsGroup"],
-	 ["petType","getElementById('edit-field-product-pet-type-wrapper')","editRadioBtn"],
-	 ["brand","getElementById('edit-field-product-brand-wrapper')","editSelect"],
-	 ["categories","getElementById('edit-field-product-category-wrapper')","editSelectsGroup"],
-	 ["lifestages","getElementById('edit-field-product-lifestage-wrapper')","editSelectsGroup"],
-	 ["ingredients","getElementById('edit-field-product-ingredient-wrapper')","editSelectsGroup"],
-	 ["conditions","getElementById('edit-field-product-condition-wrapper')","editSelectsGroup"],
-	 ["specialNeeds","getElementById('edit-field-product-special-need-wrapper')","editSelectsGroup"],
-	 ["ranges","getElementById('edit-field-product-range-wrapper')","editCheckbox"]
-  ],
-  "seoFields":[
-	 ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
-	 ["pageDescription","getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editSeoField"],
-	 ["openGraphTitle","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editSeoField"],
-	 ["openGraphDescription","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editSeoField"],
-	 ["urlAlias","getElementsByClassName('form-item-path-0-alias')[0]","editSeoField"]
-  ],
-  "copydeck":{
-	 "test":"some value"
-  }
-}`
+	"customFields":[
+	  ["internalTitle","getElementById('edit-title-wrapper')","editInput"]
+	],
+	"seoFields":[
+	  ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
+	  ["pageDescription","getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editSeoField"],
+	  ["openGraphTitle","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editSeoField"],
+	  ["openGraphDescription","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editSeoField"],
+	  ["urlAlias","getElementsByClassName('form-item-path-0-alias')[0]","editSeoField"]
+	],
+	"copydeck":{
+	  "test":"some value"
+	}
+ }`
 
 const config = JSON.parse(configJSON)
 
@@ -58,6 +74,7 @@ const snippetGoBtn = document.createElement('button')
 
 const snippetLoaderContainer = document.createElement('div')
 const snippetLoader = document.createElement('div')
+const snippetLoaderMessage = document.createElement('div')
 const loaderStyle = document.createElement('style')
 
 const snippetPageView = document.createElement('iframe')
@@ -70,68 +87,72 @@ snippetLoader.classList.add('loader')
 snippetLoader.classList.innerHTML = `Loading...`
 
 loaderStyle.innerHTML = `.loader, 
-.loader:before,
-.loader:after {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation: load7 1.8s infinite ease-in-out;
-  animation: load7 1.8s infinite ease-in-out;
-}
-.loader {
-  color: #ffffff;
-  font-size: 10px;
-  margin: 80px auto;
-  position: relative;
-  text-indent: -9999em;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
-.loader:before,
-.loader:after {
-  content: '';
-  position: absolute;
-  top: 0;
-}
-.loader:before {
-  left: -3.5em;
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-.loader:after {
-  left: 3.5em;
-}
-@-webkit-keyframes load7 {
-  0%,
-  80%,
-  100% {
-	 box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-	 box-shadow: 0 2.5em 0 0;
-  }
-}
-@keyframes load7 {
-  0%,
-  80%,
-  100% {
-	 box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-	 box-shadow: 0 2.5em 0 0;
-  }
-}`
+ .loader:before,
+ .loader:after {
+	border-radius: 50%;
+	width: 2.5em;
+	height: 2.5em;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation: load7 1.8s infinite ease-in-out;
+	animation: load7 1.8s infinite ease-in-out;
+ }
+ .loader {
+	color: #ffffff;
+	font-size: 10px;
+	margin: 80px auto;
+	position: relative;
+	text-indent: -9999em;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
+ }
+ .loader:before,
+ .loader:after {
+	content: '';
+	position: absolute;
+	top: 0;
+ }
+ .loader:before {
+	left: -3.5em;
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
+ }
+ .loader:after {
+	left: 3.5em;
+ }
+ @-webkit-keyframes load7 {
+	0%,
+	80%,
+	100% {
+	  box-shadow: 0 2.5em 0 -1.3em;
+	}
+	40% {
+	  box-shadow: 0 2.5em 0 0;
+	}
+ }
+ @keyframes load7 {
+	0%,
+	80%,
+	100% {
+	  box-shadow: 0 2.5em 0 -1.3em;
+	}
+	40% {
+	  box-shadow: 0 2.5em 0 0;
+	}
+ }`
+
+snippetLoaderMessage.innerHTML = 'some message'
 
 headNode.append(loaderStyle)
 
 snippetLoaderContainer.style.cssText = `position: absolute; height: 100%; width: 100%;
-											 background-color: #e81c24; display:none; align-items: center;
-											 justify-content: center;`
+											  background-color: #e81c24; display:none; align-items: center;
+											  justify-content: center; flex-direction: column;`
+
+snippetLoaderMessage.style.cssText = `color: #ffffff;`
 
 const snippetBtnStyle =
 	'outline: none; border: 0; border-radius: 20px; color: white; margin: 0 5px; line-height: 10px; outline: none;'
@@ -153,8 +174,8 @@ snippetInput.placeholder = 'Insert the data from the copydeck here...'
 snippetBtnContainer.style.cssText = ` padding: 0 10px; display:flex;  justify-content:space-between`
 
 snippetMainContainer.style.cssText = `position: fixed; display:flex; align-items: center;
-												left: 0; top: 0; width:100%; height: 100%; flex-direction: column;
-												z-index: 999999; background-color: #121a23; `
+												 left: 0; top: 0; width:100%; height: 100%; flex-direction: column;
+												 z-index: 999999; background-color: #121a23; `
 
 snippetControlContainer.style.cssText = `width:100%; height:70px; display:flex; padding: 0 5px`
 
@@ -165,19 +186,19 @@ snippetPageView.style.cssText = `width:100%; height: calc(100% - 146px); `
 snippetNavContainer.style.cssText = `width: 100%;  padding: 20px 5px; background-color: #0f0f0f; display: flex; justify-content: center;`
 
 snippetUrl.style.cssText = `border-radius: 20px 0 0 20px; padding:  5px 20px; text-align: center; outline: none;
-									color: #fff; border: 1px solid #69aa00; background-color: #0f0f0f; width: 70%`
+									 color: #fff; border: 1px solid #69aa00; background-color: #0f0f0f; width: 70%`
 
 snippetGoBtn.style.cssText = `border-radius: 0 20px 20px 0; padding:  5px 20px; text-align: center;
-									color: #fff; border: 1px solid #69aa00; background-color: #69aa00; outline: none;`
+									 color: #fff; border: 1px solid #69aa00; background-color: #69aa00; outline: none;`
 
 snippetInput.style.cssText = `width: 400px; border-radius:  20px; resize: none; padding: 4px 10px; outline: none; background-color: #0f0f0f;
-										border: 1px solid #00385a; color: #fff;`
+										 border: 1px solid #00385a; color: #fff;`
 
-/*snippetPageView.setAttribute(
+snippetPageView.setAttribute(
 	'src',
-	'https://dev-74941-petcare-purinattt-germany.pantheonsite.io/node/9937/edit'
-)*/
-snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)
+	'https://live-74999-petcare-purinattt-belgium.pantheonsite.io/nl/node/5016/edit'
+)
+/*snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)*/
 
 snippetUrl.value = 'URL'
 snippetGoBtn.innerHTML = 'GO'
@@ -195,6 +216,7 @@ snippetBtnContainer.append(
 snippetNavContainer.append(snippetUrl)
 snippetNavContainer.append(snippetGoBtn)
 snippetLoaderContainer.append(snippetLoader)
+snippetLoaderContainer.append(snippetLoaderMessage)
 
 snippetMainContainer.append(snippetControlContainer)
 snippetMainContainer.append(snippetNavContainer)
@@ -272,6 +294,7 @@ async function parseDataToArray() {
 	}
 
 	copydeckData = copydeckAllData[0]
+	console.log(copydeckData)
 }
 
 async function initFields(fields) {
@@ -284,6 +307,11 @@ async function initFields(fields) {
 
 async function editFields(fields) {
 	for (const field of fields) {
+		snippetLoaderMessage.innerHTML = `Editing ${field[0].replace(
+			/[A-Z]/gm,
+			(letter) => ` ${letter.toLowerCase()}`
+		)} block ...`
+
 		await eval(
 			`${field[2]}(${field[0]}Node,${field[0]}Formatter()${
 				field.length === 4 ? ',' + field[3] : ''
@@ -598,8 +626,8 @@ function internalTitleFormatter() {
 }
 
 function externalTitleFormatter() {
-	const copydeckTitle = copydeckData[7]
-	const copydeckBrand = copydeckData[30]
+	const copydeckTitle = copydeckData[6]
+	const copydeckBrand = copydeckData[22]
 
 	if (copydeckTitle && copydeckBrand) {
 		const length = copydeckTitle
@@ -625,11 +653,11 @@ function bazaavoiceProductIDFormatter() {
 }
 
 function GTINFormatter() {
-	return copydeckData[17] ? copydeckData[17] : ''
+	return copydeckData[13] ? copydeckData[13] : ''
 }
 
 function buyNowFusepumpFormatter() {
-	const copydeckBuyNowFusepump = copydeckData[25]
+	const copydeckBuyNowFusepump = copydeckData[24]
 
 	if (copydeckBuyNowFusepump.trim()) {
 		return copydeckBuyNowFusepump.trim().length > 3
@@ -666,8 +694,14 @@ function highlightsFormatter() {
 	let highlights = []
 
 	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
+		const highlight = copydeckData[i]
+			.split(/([*][A-Za-z])/gm)[0]
+			.replace(/["\n]/gm, '')
+
 		highlights.push(
-			copydeckData[i].split(/([*][A-Za-z])/gm)[0].replace(/["\n]/gm, '')
+			highlight.split()[highlight.length - 1] !== '.'
+				? `${highlight.trim()}.`
+				: highlight
 		)
 	}
 
@@ -700,25 +734,17 @@ function productSizeFormatter() {
 }
 
 function productOverviewFormatter() {
+	const copydeckProdDesc1 = copydeckData[61].trim()
+	const copydeckProdDesc2 = copydeckData[62].trim()
+
 	const firstHighlightIndex = 65
 	const lastHighlightIndex = 92
 
-	let featuresTop = [[], []]
-	let featuresBottom = [[], []]
+	let features = [[], []]
+	let descriptions = [[], []]
 
 	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
-		featuresTop[0].length < 4
-			? pushFeatures(featuresTop, copydeckData[i])
-			: pushFeatures(featuresBottom, copydeckData[i])
-	}
-
-	function pushFeatures(features, val) {
-		if (val.length > 3) {
-			let splitedFeature = val.split(/([*][A-Za-z])/gm)
-
-			features[0].push(splitedFeature[0].replace(/["\n]/gm, ''))
-			features[1].push(splitedFeature.slice(1).join('').replace(/["\n]/gm, ''))
-		}
+		separateDescription(copydeckData[i], features)
 	}
 
 	function buildDescription(descArr) {
@@ -737,21 +763,35 @@ function productOverviewFormatter() {
 			: ''
 	}
 
-	let firstBlock = `<p><strong>Merkmale</strong></p> <ul><li>${featuresTop[0]
+	let firstBlock = `<p><strong>Merkmale</strong></p> <ul><li>${features[0]
 		.map((f) => {
 			return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
 		})
-		.join('</li><li>')}</li></ul>${buildDescription(featuresTop)}`
-	let secondtBlock =
-		featuresBottom[0].length > 0
-			? `<p>${featuresBottom[0]
-					.map((f) => {
-						return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
-					})
-					.join('</p><p>')}</p>${buildDescription(featuresBottom)}`
-			: ''
+		.join('</li><li>')}</li></ul>${buildDescription(features)}`
 
-	return [firstBlock, secondtBlock]
+	if (copydeckProdDesc1.length > 5) {
+		separateDescription(copydeckProdDesc1, descriptions)
+	}
+
+	if (copydeckProdDesc2.length > 5) {
+		separateDescription(copydeckProdDesc2, descriptions)
+	}
+
+	let secondBlock = `<p>${descriptions[0]
+		.map((e) => {
+			return e.split()[e.length - 1] !== '.' ? `${e.trim()}.` : f
+		})
+		.join(' ')}</p>${buildDescription(descriptions)}`
+
+	function separateDescription(val, arr) {
+		if (val.length > 3) {
+			let splittedFeature = val.split(/([*][A-Za-z])/gm)
+			arr[0].push(splittedFeature[0].replace(/["\n]/gm, ''))
+			arr[1].push(splittedFeature.slice(1).join('').replace(/["\n]/gm, ''))
+		}
+	}
+
+	return [firstBlock, secondBlock]
 }
 
 function ingredientsAndNutritionFormatter() {
@@ -768,7 +808,7 @@ function ingredientsAndNutritionFormatter() {
 	return [
 		`<p><strong>Zutaten</strong></p><p>${copydeckIngredients}</p>`,
 		`<p><strong>Analytische Bestandteile</strong></p><p>${copydeckNutritionAnalyticalConstituents}</p>
-		<p><strong>Ernährungsphysiologische Zusatzstoffe</strong></p><p>${copydeckIngredientsNutritionalAdditives}</p>`,
+		 <p><strong>Ernährungsphysiologische Zusatzstoffe</strong></p><p>${copydeckIngredientsNutritionalAdditives}</p>`,
 	]
 }
 

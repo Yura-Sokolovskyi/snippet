@@ -232,6 +232,9 @@ snippetGoBtn.addEventListener('click', () => {
  *Snippet Add Product logic start
  */
 
+let initCustomFieldsFlag = false
+let initSeoFieldsFlag = false
+
 snippetPageView.addEventListener('load', () => {
 	snippetUrl.value = snippetPageView.contentWindow.location.href
 })
@@ -243,36 +246,42 @@ snippetPageView.addEventListener('click', () => {
 snippetAddCustomBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.customFields)
+	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initCustomFieldsFlag = true
 })
 
 snippetAddSeoBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.seoFields)
+	await initFields(config.seoFields, initSeoFieldsFlag)
 	await editFields(config.seoFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initSeoFieldsFlag = true
 })
 
 snippetAddAllBtn.addEventListener('click', async function () {
 	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
-	await initFields(config.customFields)
+	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
-	await initFields(config.seoFields)
+	await initFields(config.seoFields, initSeoFieldsFlag)
 	await editFields(config.seoFields)
 	setAuthor()
 	snippetLoaderContainer.style.display = 'none'
+	initCustomFieldsFlag = true
+	initSeoFieldsFlag = true
 })
 
 let copydeckAllData = []
 let copydeckData = []
 
 async function parseDataToArray() {
+	copydeckAllData = []
+
 	for await (const column of snippetInput.value.split('	\n')) {
 		copydeckAllData.push(column.split('\t'))
 	}
@@ -280,11 +289,13 @@ async function parseDataToArray() {
 	copydeckData = copydeckAllData[0]
 }
 
-async function initFields(fields) {
-	for (const field of fields) {
-		await eval(
-			`${field[0]}Node = snippetPageView.contentWindow.document.${field[1]}`
-		)
+async function initFields(fields, flag) {
+	if (!flag) {
+		for (const field of fields) {
+			await eval(
+				`${field[0]}Node = snippetPageView.contentWindow.document.${field[1]}`
+			)
+		}
 	}
 }
 
