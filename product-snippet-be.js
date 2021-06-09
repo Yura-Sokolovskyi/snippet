@@ -652,10 +652,10 @@ function internalTitleFormatter() {
 }
 
 function externalTitleFormatter() {
-	const copydeckTitle = copydeckData[5]
-	const copydeckBrand = copydeckData[14]
+	const copydeckTitle = copydeckData[5].trim()
+	const copydeckBrand = copydeckData[14].trim()
 
-	if (copydeckTitle.trim() && copydeckBrand.trim()) {
+	if (copydeckTitle && copydeckBran) {
 		const length = copydeckTitle
 			.toLowerCase()
 			.split(copydeckBrand.toLowerCase())[1]
