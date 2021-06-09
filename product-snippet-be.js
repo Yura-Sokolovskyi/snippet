@@ -242,12 +242,13 @@ let initSeoFieldsFlag = false
 
 const config = JSON.parse(configJSON)
 
-let language = 'default'
+let language = ''
 
 function changePage() {
 	const url = snippetPageView.contentWindow.location.href
+	const urlLanguage = url.split('//')[1].split('/')[1]
 	snippetUrl.value = url
-	language = url.split('//')[1].split('/')[1]
+	language = urlLanguage.length === 2 ? urlLanguage : ''
 	initCustomFieldsFlag = false
 	initSeoFieldsFlag = false
 }
@@ -825,7 +826,7 @@ function productOverviewFormatter() {
 
 function ingredientsAndNutritionFormatter() {
 	const copydeckIngredients = copydeckData[40].trim()
-		? copydeckData[40].replace(/["♥]/gi, '')
+		? copydeckData[86].replace(/["♥]/gi, '')
 		: ''
 	const copydeckNutritionAnalyticalConstituents = copydeckData[89].trim()
 		? copydeckData[89].replace(/["♥]/gi, '')
