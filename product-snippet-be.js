@@ -661,13 +661,9 @@ function externalTitleFormatter() {
 			.split(copydeckBrand.toLowerCase())[1]
 			.replace(/[^a-z\s]/gi, '').length
 		return length
-			? `${copydeckTitle.substring(
-					0,
-					copydeckBrand.length
-			  )}® ${copydeckTitle.substring(
-					copydeckTitle.length - length,
-					copydeckTitle.length
-			  )}`
+			? `${copydeckTitle.substring(0, copydeckBrand.length)}® ${copydeckTitle
+					.substring(copydeckTitle.length - length, copydeckTitle.length)
+					.trim()}`
 			: ''
 	}
 	return ''
