@@ -700,7 +700,7 @@ function buyNowFusepumpFormatter() {
 
 function newsletterFormatter() {
 	const copydecPetType = copydeckData[16]
-	const copydecNewsletter = copydeckData[73]
+	const copydecNewsletter = copydeckData[74]
 
 	return copydecPetType && copydecNewsletter
 		? [copydecPetType, copydecNewsletter]
