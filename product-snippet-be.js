@@ -795,8 +795,11 @@ function productOverviewFormatter() {
 	let firstBlock = `<p><strong>${
 		config.copydeck.translations.features[language]
 	}</strong></p> <ul><li>${features[0]
-		.map((f) => {
-			return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
+		.map((e) => {
+			let element = e.trim()
+			return element.split('')[element.length - 1] !== '.'
+				? `${element}.`
+				: element
 		})
 		.join('</li><li>')}</li></ul>${buildDescription(features)}`
 
@@ -806,14 +809,17 @@ function productOverviewFormatter() {
 
 	let secondBlock = `<p>${descriptions[0]
 		.map((e) => {
-			return e.split()[e.length - 1] !== '.' ? `${e.trim()}.` : f
+			let element = e.trim()
+			return element.split('')[element.length - 1] !== '.'
+				? `${element.trim()}.`
+				: element
 		})
 		.join(' ')}</p>${buildDescription(descriptions)}`
 
 	function separateDescription(val, arr) {
 		if (val.length > 3) {
 			let splittedFeature = val.split(/([*][A-Za-z])/gm)
-			arr[0].push(splittedFeature[0].replace(/["\n]/gm, ''))
+			arr[0].push(splittedFeature[0].replace(/["\n]/gm, '').trim())
 			arr[1].push(splittedFeature.slice(1).join('').replace(/["\n]/gm, ''))
 		}
 	}
