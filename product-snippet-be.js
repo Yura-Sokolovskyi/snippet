@@ -729,7 +729,7 @@ function highlightsFormatter() {
 			.replace(/["\n]/gm, '')
 
 		highlights.push(
-			highlight.split()[highlight.length - 1] !== '.'
+			highlight.trim().split()[highlight.length - 1] !== '.'
 				? `${highlight.trim()}.`
 				: highlight
 		)
