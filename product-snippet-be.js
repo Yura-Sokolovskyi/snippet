@@ -723,10 +723,11 @@ function highlightsFormatter() {
 		const highlight = copydeckData[i]
 			.split(/([*][A-Za-z])/gm)[0]
 			.replace(/["\n]/gm, '')
+			.trim()
 
 		highlights.push(
-			highlight.trim().split()[highlight.length - 1] !== '.'
-				? `${highlight.trim()}.`
+			highlight.split('')[highlight.length - 1] != '.'
+				? `${highlight}.`
 				: highlight
 		)
 	}
