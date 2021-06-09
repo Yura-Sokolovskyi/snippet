@@ -1,39 +1,43 @@
 const configJSON = `{
 	"customFields":[
-	  ["internalTitle","getElementById('edit-title-wrapper')","editInput"],
-	  ["externalTitle","getElementById('edit-field-product-label-wrapper')","editInput"],
-	  ["bazaavoiceProductID","getElementById('edit-field-product-bv-id-wrapper')","editInput"],
-	  ["GTIN","getElementById('edit-field-dsu-sku-wrapper')","editInput"],
-	  ["buyNowFusepump","getElementById('edit-field-product-fusepump-wrapper')","editInput"],
-	  ["newsletter","getElementById('edit-field-product-newsletter-wrapper')","editSelect"],
-	  ["headLine","getElementById('edit-field-product-headline-wrapper')","editInput"],
-	  ["highlights","getElementById('edit-field-product-highlight-wrapper')","editInputsGroup",4],
-	  ["productSize","getElementById('edit-field-product-size-wrapper')","editInputsGroup"],
-	  ["productOverview","getElementById('edit-group-product-detail')","editEditorsGroup"],
-	  ["ingredientsAndNutrition","getElementById('edit-field-product-nutrition-wrapper')","editEditorsGroup"],
-	  ["feedingGuide","getElementById('edit-field-product-feeding-guide-wrapper')","editEditorsGroup"],
-	  ["petType","getElementById('edit-field-product-pet-type-wrapper')","editRadioBtn"],
-	  ["brand","getElementById('edit-field-product-brand-wrapper')","editSelect"],
-	  ["categories","getElementById('edit-field-product-category-wrapper')","editSelectsGroup"],
-	  ["lifestages","getElementById('edit-field-product-lifestage-wrapper')","editSelectsGroup"],
-	  ["ingredients","getElementById('edit-field-product-ingredient-wrapper')","editSelectsGroup"],
-	  ["conditions","getElementById('edit-field-product-condition-wrapper')","editSelectsGroup"],
-	  ["specialNeeds","getElementById('edit-field-product-special-need-wrapper')","editSelectsGroup"],
-	  ["ranges","getElementById('edit-field-product-range-wrapper')","editCheckbox"]
+	  {"name":"internalTitle","selector":"getElementById('edit-title-wrapper')","editor":"editInput", "languages" : ["fr"]},
+	  {"name":"externalTitle","selector":"getElementById('edit-field-product-label-wrapper')","editor":"editInput", "languages" : ["fr","nl"]},
+	  {"name":"bazaavoiceProductID","selector":"getElementById('edit-field-product-bv-id-wrapper')","editor":"editInput", "languages" : ["fr"]},
+	  {"name":"GTIN","selector":"getElementById('edit-field-dsu-sku-wrapper')","editor":"editInput", "languages" : ["fr"]},
+	  {"name":"buyNowFusepump","selector":"getElementById('edit-field-product-fusepump-wrapper')","editor":"editInput", "languages" : ["fr"]},
+	  {"name":"newsletter","selector":"getElementById('edit-field-product-newsletter-wrapper')","editor":"editSelect", "languages" : ["fr"]},
+	  {"name":"headLine","selector":"getElementById('edit-field-product-headline-wrapper')","editor":"editInput", "languages" : ["fr","nl"]},
+	  {"name":"highlights","selector":"getElementById('edit-field-product-highlight-wrapper')","editor":"editInputsGroup","quantity":4, "languages" : ["fr","nl"]},
+	  {"name":"productSize","selector":"getElementById('edit-field-product-size-wrapper')","editor":"editInputsGroup", "languages" : ["fr","nl"]},
+	  {"name":"productOverview","selector":"getElementById('edit-group-product-detail')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
+	  {"name":"ingredientsAndNutrition","selector":"getElementById('edit-field-product-nutrition-wrapper')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
+	  {"name":"feedingGuide","selector":"getElementById('edit-field-product-feeding-guide-wrapper')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
+	  {"name":"petType","selector":"getElementById('edit-field-product-pet-type-wrapper')","editor":"editRadioBtn", "languages" : ["fr"]},
+	  {"name":"brand","selector":"getElementById('edit-field-product-brand-wrapper')","editor":"editSelect", "languages" : ["fr"]},
+	  {"name":"categories","selector":"getElementById('edit-field-product-category-wrapper')","editor":"editSelectsGroup", "languages" : ["fr"]},
+	  {"name":"lifestages","selector":"getElementById('edit-field-product-lifestage-wrapper')","editor":"editSelectsGroup", "languages" : ["fr"]},
+	  {"name":"ingredients","selector":"getElementById('edit-field-product-ingredient-wrapper')","editor":"editSelectsGroup", "languages" : ["fr"]},
+	  {"name":"conditions","selector":"getElementById('edit-field-product-condition-wrapper')","editor":"editSelectsGroup", "languages" : ["fr"]},
+	  {"name":"specialNeeds","selector":"getElementById('edit-field-product-special-need-wrapper')","editor":"editSelectsGroup", "languages" : ["fr"]},
+	  {"name":"ranges","selector":"getElementById('edit-field-product-range-wrapper')","editor":"editCheckbox", "languages" : ["fr"]}
 	],
 	"seoFields":[
-	  ["pageTitle","getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editSeoField"],
-	  ["pageDescription","getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editSeoField"],
-	  ["openGraphTitle","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editSeoField"],
-	  ["openGraphDescription","getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editSeoField"],
-	  ["urlAlias","getElementsByClassName('form-item-path-0-alias')[0]","editSeoField"]
+	  {"name":"pageTitle","selector":"getElementsByClassName('form-item-field-meta-tags-0-basic-title')[0]","editor":"editSeoField", "languages" : ["fr","nl"]},
+	  {"name":"pageDescription","selector":"getElementsByClassName('form-item-field-meta-tags-0-basic-description')[0]","editor":"editSeoField", "languages" : ["fr","nl"]},
+	  {"name":"openGraphTitle","selector":"getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-title')[0]","editor":"editSeoField", "languages" : ["fr","nl"]},
+	  {"name":"openGraphDescription","selector":"getElementsByClassName('form-item-field-meta-tags-0-open-graph-og-description')[0]","editor":"editSeoField", "languages" : ["fr","nl"]},
+	  {"name":"urlAlias","selector":"getElementsByClassName('form-item-path-0-alias')[0]","editor":"editSeoField", "languages" : ["fr","nl"]}
 	],
 	"copydeck":{
-	  "test":"some value"
+	  "translations":{
+		  "features":{"fr":"Caractéristiques", "nl":"Kenmerken"},
+		  "ingredients":{"fr":"Ingrédients", "nl":"Ingrediënten"},
+		  "analyticalConstituents":{"fr":"Nutrition et constituants analytiques", "nl":"Voeding en analytische stoffen"},
+		  "nutritionalAdditives":{"fr":"Additifs nutritionnels", "nl":"Voedingsadditieven"},
+		  "feedingGuide":{"fr":"Guide d'alimentation", "nl":"Voedingsadvies"}
+		}
 	}
  }`
-
-const config = JSON.parse(configJSON)
 
 /*
  *Snippet GUI start
@@ -178,11 +182,12 @@ snippetGoBtn.style.cssText = `border-radius: 0 20px 20px 0; padding:  5px 20px; 
 snippetInput.style.cssText = `width: 400px; border-radius:  20px; resize: none; padding: 4px 10px; outline: none; background-color: #0f0f0f;
 										 border: 1px solid #00385a; color: #fff;`
 
-/*snippetPageView.setAttribute(
-	 'src',
-	 'https://dev-74941-petcare-purinattt-germany.pantheonsite.io/node/9937/edit'
- )*/
-snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)
+snippetPageView.setAttribute(
+	'src',
+	'https://live-74999-petcare-purinattt-belgium.pantheonsite.io/fr/node/5016/edit'
+)
+
+/*snippetPageView.setAttribute('src', `${window.location.origin}/admin/content`)*/
 
 snippetUrl.value = 'URL'
 snippetGoBtn.innerHTML = 'GO'
@@ -235,16 +240,28 @@ snippetGoBtn.addEventListener('click', () => {
 let initCustomFieldsFlag = false
 let initSeoFieldsFlag = false
 
-snippetPageView.addEventListener('load', () => {
-	snippetUrl.value = snippetPageView.contentWindow.location.href
+const config = JSON.parse(configJSON)
+
+let language = 'default'
+
+function changePage() {
+	const url = snippetPageView.contentWindow.location.href
+	snippetUrl.value = url
+	language = url.split('//')[1].split('/')[1]
 	initCustomFieldsFlag = false
 	initSeoFieldsFlag = false
+}
+
+function checkLanguage(languages) {
+	return languages.filter((e) => e === language).length
+}
+
+snippetPageView.addEventListener('load', () => {
+	changePage()
 })
 
 snippetPageView.addEventListener('click', () => {
-	snippetUrl.value = snippetPageView.contentWindow.location.href
-	initCustomFieldsFlag = false
-	initSeoFieldsFlag = false
+	changePage()
 })
 
 snippetAddCustomBtn.addEventListener('click', async function () {
@@ -285,36 +302,38 @@ let copydeckData = []
 
 async function parseDataToArray() {
 	copydeckAllData = []
-
 	for await (const column of snippetInput.value.split('	\n')) {
-		copydeckAllData.push(column.split('\t'))
+		copydeckAllData.push(column.split('	'))
 	}
-
 	copydeckData = copydeckAllData[0]
 }
 
 async function initFields(fields, flag) {
 	if (!flag) {
 		for (const field of fields) {
-			await eval(
-				`${field[0]}Node = snippetPageView.contentWindow.document.${field[1]}`
-			)
+			if (checkLanguage(field.languages)) {
+				await eval(
+					`${field.name}Node = snippetPageView.contentWindow.document.${field.selector}`
+				)
+			}
 		}
 	}
 }
 
 async function editFields(fields) {
 	for (const field of fields) {
-		snippetLoaderMessage.innerHTML = `Editing ${field[0].replace(
+		snippetLoaderMessage.innerHTML = `Editing ${field.name.replace(
 			/[A-Z]/gm,
 			(letter) => ` ${letter.toLowerCase()}`
 		)} block ...`
 
-		await eval(
-			`${field[2]}(${field[0]}Node,${field[0]}Formatter()${
-				field.length === 4 ? ',' + field[3] : ''
-			})`
-		)
+		if (checkLanguage(field.languages)) {
+			await eval(
+				`${field.editor}(${field.name}Node,${field.name}Formatter()${
+					field.quantity ? ',' + field.quantity : ''
+				})`
+			)
+		}
 	}
 }
 
@@ -408,6 +427,8 @@ async function editInputsGroup(node, values, numberOfFields = values.length) {
  *Function for editing block like "Headline" or "External title"
  **/
 async function editInput(node, value) {
+	console.log(node)
+
 	const nodeInput = node.querySelector('input')
 		? node.querySelector('input')
 		: node.querySelector('textarea')
@@ -452,13 +473,19 @@ async function editSelect(node, values) {
  **/
 async function editRadioBtn(node, value) {
 	let radioButtons = node.querySelectorAll('input')
+	let matchFound = false
 
 	for (const btn of radioButtons) {
 		btn.removeAttribute('checked')
 		let label = btn.parentElement.querySelector('label').innerHTML
 		if (label.toLowerCase() === value.toLowerCase()) {
 			btn.setAttribute('checked', 'checked')
+			matchFound = true
 		}
+	}
+
+	if (!matchFound) {
+		showNotFoundedValue(node, [value])
 	}
 }
 
@@ -624,8 +651,8 @@ function internalTitleFormatter() {
 }
 
 function externalTitleFormatter() {
-	const copydeckTitle = copydeckData[7]
-	const copydeckBrand = copydeckData[30]
+	const copydeckTitle = copydeckData[6]
+	const copydeckBrand = copydeckData[22]
 
 	if (copydeckTitle && copydeckBrand) {
 		const length = copydeckTitle
@@ -646,16 +673,20 @@ function externalTitleFormatter() {
 }
 
 function bazaavoiceProductIDFormatter() {
-	const copydeckId = copydeckData[21]
+	const copydeckId = copydeckData[15]
 	return isNaN(parseInt(copydeckId)) ? '' : copydeckId
 }
 
 function GTINFormatter() {
-	return copydeckData[17] ? copydeckData[17] : ''
+	let copydeckGTIN = copydeckData[13].trim()
+		? copydeckData[13].split(' ')[0].replace(';', '')
+		: ''
+
+	return copydeckGTIN
 }
 
 function buyNowFusepumpFormatter() {
-	const copydeckBuyNowFusepump = copydeckData[24]
+	const copydeckBuyNowFusepump = copydeckData[17]
 
 	if (copydeckBuyNowFusepump.trim()) {
 		return copydeckBuyNowFusepump.trim().length > 3
@@ -667,8 +698,8 @@ function buyNowFusepumpFormatter() {
 }
 
 function newsletterFormatter() {
-	const copydecPetType = copydeckData[31]
-	const copydecNewsletter = copydeckData[125]
+	const copydecPetType = copydeckData[25]
+	const copydecNewsletter = copydeckData[116]
 
 	return copydecPetType && copydecNewsletter
 		? [copydecPetType, copydecNewsletter]
@@ -676,9 +707,9 @@ function newsletterFormatter() {
 }
 
 function headLineFormatter() {
-	const copydeckBrand = copydeckData[30]
-	const copydeckFoodType = copydeckData[36]
-	const copydeckPetType = copydeckData[33]
+	const copydeckBrand = copydeckData[22]
+	const copydeckFoodType = copydeckData[28]
+	const copydeckPetType = copydeckData[25]
 
 	return copydeckBrand && copydeckBrand && copydeckPetType
 		? `${copydeckBrand}® ${copydeckFoodType} für ${copydeckPetType}`
@@ -686,8 +717,8 @@ function headLineFormatter() {
 }
 
 function highlightsFormatter() {
-	const firstHighlightIndex = 65
-	const lastHighlightIndex = 92
+	const firstHighlightIndex = 56
+	const lastHighlightIndex = 83
 
 	let highlights = []
 
@@ -710,7 +741,7 @@ function highlightsFormatter() {
  * TODO sorting
  */
 function productSizeFormatter() {
-	const copydeckPackSize = copydeckData[57]
+	const copydeckPackSize = copydeckData[49]
 	let packSizes = []
 
 	if (copydeckPackSize) {
@@ -720,6 +751,9 @@ function productSizeFormatter() {
 			.map((val) => {
 				if (val.includes('x')) {
 					return `${val.replace(/[^x0-9\s]/gi, '')}g`
+				} else if (val.includes('kg')) {
+					let parsedVal = parseInt(val.replace(/[^0-9]/gi, ''))
+					return `${parsedVal}kg`
 				} else {
 					let parsedVal = parseInt(val.replace(/[^0-9]/gi, ''))
 					return parsedVal > 1000 ? `${parsedVal / 1000}kg` : `${parsedVal}g`
@@ -732,11 +766,10 @@ function productSizeFormatter() {
 }
 
 function productOverviewFormatter() {
-	const copydeckProdDesc1 = copydeckData[61].trim()
-	const copydeckProdDesc2 = copydeckData[62].trim()
+	const copydeckProdDesc1 = copydeckData[53].trim()
 
-	const firstHighlightIndex = 65
-	const lastHighlightIndex = 92
+	const firstHighlightIndex = 56
+	const lastHighlightIndex = 83
 
 	let features = [[], []]
 	let descriptions = [[], []]
@@ -761,7 +794,9 @@ function productOverviewFormatter() {
 			: ''
 	}
 
-	let firstBlock = `<p><strong>Merkmale</strong></p> <ul><li>${features[0]
+	let firstBlock = `<p><strong>${
+		config.copydeck.translations.features[language]
+	}</strong></p> <ul><li>${features[0]
 		.map((f) => {
 			return f.split()[f.length - 1] !== '.' ? `${f.trim()}.` : f
 		})
@@ -769,10 +804,6 @@ function productOverviewFormatter() {
 
 	if (copydeckProdDesc1.length > 5) {
 		separateDescription(copydeckProdDesc1, descriptions)
-	}
-
-	if (copydeckProdDesc2.length > 5) {
-		separateDescription(copydeckProdDesc2, descriptions)
 	}
 
 	let secondBlock = `<p>${descriptions[0]
@@ -793,64 +824,63 @@ function productOverviewFormatter() {
 }
 
 function ingredientsAndNutritionFormatter() {
-	const copydeckIngredients = copydeckData[95].trim()
-		? copydeckData[95].replace(/["♥]/gi, '')
+	const copydeckIngredients = copydeckData[40].trim()
+		? copydeckData[40].replace(/["♥]/gi, '')
 		: ''
-	const copydeckNutritionAnalyticalConstituents = copydeckData[98].trim()
-		? copydeckData[98].replace(/["♥]/gi, '')
+	const copydeckNutritionAnalyticalConstituents = copydeckData[89].trim()
+		? copydeckData[89].replace(/["♥]/gi, '')
 		: ''
-	const copydeckIngredientsNutritionalAdditives = copydeckData[101].trim()
-		? copydeckData[101].replace(/["♥]/gi, '')
+	const copydeckIngredientsNutritionalAdditives = copydeckData[92].trim()
+		? copydeckData[92].replace(/["♥]/gi, '')
 		: ''
 
 	return [
-		`<p><strong>Zutaten</strong></p><p>${copydeckIngredients}</p>`,
-		`<p><strong>Analytische Bestandteile</strong></p><p>${copydeckNutritionAnalyticalConstituents}</p>
-		 <p><strong>Ernährungsphysiologische Zusatzstoffe</strong></p><p>${copydeckIngredientsNutritionalAdditives}</p>`,
+		`<p><strong>${config.copydeck.translations.ingredients[language]}</strong></p><p>${copydeckIngredients}</p>`,
+		`<p><strong>${config.copydeck.translations.analyticalConstituents[language]}</strong></p><p>${copydeckNutritionAnalyticalConstituents}</p>
+		 <p><strong>${config.copydeck.translations.nutritionalAdditives[language]}</strong></p><p>${copydeckIngredientsNutritionalAdditives}</p>`,
 	]
 }
 
 function feedingGuideFormatter() {
-	const copydeckIngredients = copydeckData[104]
+	const copydeckIngredients = copydeckData[95]
 
 	return [
-		`<p><strong>Fütterungs­empfehlung</strong></p><p>${copydeckIngredients.replace(
-			/["♥]/gi,
-			''
-		)}</p>`,
+		`<p><strong>${
+			config.copydeck.translations.feedingGuide[language]
+		}</strong></p><p>${copydeckIngredients
+			.replace(/["♥]/gi, '')
+			.replace(/<\/?[^>]+(>|$)/g, '')}</p>`,
 	]
 }
 
 /*TAXONOMY FORMATTERS*/
 function petTypeFormatter() {
-	const copydeckFoodTypeLocal = copydeckData[31]
+	const copydeckFoodTypeLocal = copydeckData[25]
 	return copydeckFoodTypeLocal
 }
 
 function brandFormatter() {
-	const copydeckBrand = copydeckData[30]
+	const copydeckBrand = copydeckData[22]
 	return [copydeckBrand]
 }
 
 function categoriesFormatter() {
-	const copydeckPetType = copydeckData[31]
-	const copydeckFoodTypeLocal = copydeckData[36]
+	const copydeckPetType = copydeckData[25]
+	const copydeckFoodTypeLocal = copydeckData[28]
 
 	return [[copydeckPetType, copydeckFoodTypeLocal]]
 }
 
 function lifestagesFormatter() {
-	const copydeckPetType = copydeckData[31]
-	const copydeckLifestageLocal = copydeckData[127]
-		.split(';')
-		.map((s) => s.trim())[4]
+	const copydeckPetType = copydeckData[25]
+	const copydeckLifestageLocal = copydeckData[37]
 
 	return [[copydeckLifestageLocal, copydeckPetType]]
 }
 
 function ingredientsFormatter() {
-	const ingredients = copydeckData[48].split(',')
-	const copydeckPetType = copydeckData[31]
+	const ingredients = copydeckData[40].split(',')
+	const copydeckPetType = copydeckData[25]
 
 	let data = []
 
@@ -864,26 +894,26 @@ function ingredientsFormatter() {
 }
 
 function conditionsFormatter() {
-	const conditions = copydeckData[51].trim()
-	const copydeckPetType = copydeckData[31]
+	const conditions = copydeckData[43].trim()
+	const copydeckPetType = copydeckData[25]
 
-	return conditions.trim() && copydeckPetType.trim()
+	return conditions.trim().length > 5 && copydeckPetType.trim()
 		? [[conditions, copydeckPetType]]
 		: [['- None -']]
 }
 
 function specialNeedsFormatter() {
-	const specialNeeds = copydeckData[54].trim()
-	const copydeckPetType = copydeckData[31]
+	const specialNeeds = copydeckData[46].trim()
+	const copydeckPetType = copydeckData[25]
 
-	return specialNeeds.trim() && copydeckPetType.trim()
+	return specialNeeds.trim().length > 5 && copydeckPetType.trim()
 		? [[specialNeeds, copydeckPetType]]
 		: [['- None -']]
 }
 
 function rangesFormatter() {
-	const copydeckRange = copydeckData[39].trim()
-	const copydeckBrand = copydeckData[30]
+	const copydeckRange = copydeckData[31].trim()
+	const copydeckBrand = copydeckData[22]
 
 	return copydeckRange.trim() && copydeckBrand.trim()
 		? [[copydeckRange, copydeckBrand]]
@@ -893,23 +923,23 @@ function rangesFormatter() {
 /*SEO FORMATTERS */
 
 function pageTitleFormatter() {
-	const seoTitle = copydeckData[110]
+	const seoTitle = copydeckData[101]
 	return seoTitle ? seoTitle : ''
 }
 function pageDescriptionFormatter() {
-	const seoDescription = copydeckData[113]
+	const seoDescription = copydeckData[104]
 	return seoDescription ? seoDescription : ''
 }
 function openGraphTitleFormatter() {
-	const seoOGTitle = copydeckData[116]
+	const seoOGTitle = copydeckData[107]
 	return seoOGTitle ? seoOGTitle : ''
 }
 function openGraphDescriptionFormatter() {
-	const seoOGDescription = copydeckData[119]
+	const seoOGDescription = copydeckData[110]
 	return seoOGDescription ? seoOGDescription : ''
 }
 function urlAliasFormatter() {
-	const urlAlias = copydeckData[10]
+	const urlAlias = copydeckData[9]
 	return urlAlias ? urlAlias : ''
 }
 
