@@ -9,7 +9,7 @@ const configJSON = `{
 	  {"name":"headLine","selector":"getElementById('edit-field-product-headline-wrapper')","editor":"editInput", "languages" : ["fr","nl"]},
 	  {"name":"highlights","selector":"getElementById('edit-field-product-highlight-wrapper')","editor":"editInputsGroup","quantity":4, "languages" : ["fr","nl"]},
 	  {"name":"productSize","selector":"getElementById('edit-field-product-size-wrapper')","editor":"editInputsGroup", "languages" : ["fr","nl"]},
-	  {"name":"productOverview","selector":"getElementById('edit-group-product-detail')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
+	  {"name":"productOverview","selector":"getElementById('edit-field-product-overview-wrapper')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
 	  {"name":"ingredientsAndNutrition","selector":"getElementById('edit-field-product-nutrition-wrapper')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
 	  {"name":"feedingGuide","selector":"getElementById('edit-field-product-feeding-guide-wrapper')","editor":"editEditorsGroup", "languages" : ["fr","nl"]},
 	  {"name":"petType","selector":"getElementById('edit-field-product-pet-type-wrapper')","editor":"editRadioBtn", "languages" : ["fr"]},
@@ -361,9 +361,15 @@ async function setAuthor() {
  *Function for editing block like "PRODUCT OVERVIEW" or "INGREDIENTS & NUTRITION"
  **/
 async function editEditorsGroup(node, values, numberOfFields = values.length) {
-	clickElement(node.querySelector('input.paragraphs-icon-button'))
+	console.log(node)
+	const btnNode = node.querySelector('input.paragraphs-icon-button')
 
-	await checkNodeChanges(node)
+	let flag = btnNode.value === 'Edit'
+
+	if (flag) {
+		clickElement(btnNode)
+		await checkNodeChanges(node)
+	}
 
 	const numberOfExtraFields =
 		numberOfFields - node.querySelectorAll('.tabledrag-handle').length
@@ -376,7 +382,7 @@ async function editEditorsGroup(node, values, numberOfFields = values.length) {
 			)
 			await waitForChanges()
 		}
-	} else {
+	} else if (flag) {
 		await waitForChanges()
 	}
 
@@ -429,14 +435,12 @@ async function editInputsGroup(node, values, numberOfFields = values.length) {
  *Function for editing block like "Headline" or "External title"
  **/
 async function editInput(node, value) {
-	console.log(node)
-
 	const nodeInput = node.querySelector('input')
 		? node.querySelector('input')
 		: node.querySelector('textarea')
 	const flag = value || value.trim()
 
-	nodeInput.value = flag ? value : 'Not faund'
+	nodeInput.value = flag ? value : ''
 	nodeInput.style.backgroundColor = flag ? addedColor : notAddedColor
 }
 
@@ -671,33 +675,25 @@ function externalTitleFormatter() {
 }
 
 function bazaavoiceProductIDFormatter() {
-	const copydeckId = copydeckData[10]
-	return isNaN(parseInt(copydeckId)) ? '' : copydeckId
+	const copydeckId = copydeckData[10].replace(/[^0-9]/gm, '').trim()
+	return copydeckId.length > 0 && copydeckId !== '0' ? copydeckId : ''
 }
 
 function GTINFormatter() {
-	let copydeckGTIN = copydeckData[9].trim()
-		? copydeckData[9].split(' ')[0].replace(';', '')
-		: ''
-
-	return copydeckGTIN
+	const copydeckGTIN = copydeckData[9].replace(/[^0-9]/gm, '').trim()
+	return copydeckGTIN.length > 0 && copydeckGTIN !== '0' ? copydeckGTIN : ''
 }
 
 function buyNowFusepumpFormatter() {
-	const copydeckBuyNowFusepump = copydeckData[11]
-
-	if (copydeckBuyNowFusepump.trim()) {
-		return copydeckBuyNowFusepump.trim().length > 3
-			? copydeckBuyNowFusepump
-			: ' '
-	}
-
-	return ''
+	const copydeckBuyNowFusepump = copydeckData[11].replace(/[^0-9]/gm, '').trim()
+	return copydeckBuyNowFusepump.length > 0 && copydeckBuyNowFusepump !== '0'
+		? copydeckBuyNowFusepump
+		: ''
 }
 
 function newsletterFormatter() {
 	const copydecPetType = copydeckData[16]
-	const copydecNewsletter = copydeckData[75]
+	const copydecNewsletter = copydeckData[76]
 
 	return copydecPetType && copydecNewsletter
 		? [copydecPetType, copydecNewsletter]
@@ -705,13 +701,9 @@ function newsletterFormatter() {
 }
 
 function headLineFormatter() {
-	const copydeckBrand = copydeckData[14]
-	const copydeckFoodType = copydeckData[18]
-	const copydeckPetType = copydeckData[16]
+	const prodCategoryLocal = copydeckData[22]
 
-	return copydeckBrand && copydeckBrand && copydeckPetType
-		? `${copydeckBrand}® ${copydeckFoodType} für ${copydeckPetType}`
-		: ''
+	return prodCategoryLocal ? prodCategoryLocal : ''
 }
 
 function highlightsFormatter() {
@@ -726,8 +718,9 @@ function highlightsFormatter() {
 			.replace(/["\n]/gm, '')
 			.trim()
 
+		let lastSymbol = highlight.split('')[highlight.length - 1]
 		highlights.push(
-			highlight.split('')[highlight.length - 1] != '.'
+			lastSymbol !== '.' && lastSymbol !== '!' && lastSymbol !== '?'
 				? `${highlight}.`
 				: highlight
 		)
@@ -798,7 +791,8 @@ function productOverviewFormatter() {
 	}</strong></p> <ul><li>${features[0]
 		.map((e) => {
 			let element = e.trim()
-			return element.split('')[element.length - 1] !== '.'
+			let lastSymbol = element.split('')[element.length - 1]
+			return lastSymbol !== '.' && lastSymbol !== '!' && lastSymbol !== '?'
 				? `${element}.`
 				: element
 		})
@@ -811,7 +805,8 @@ function productOverviewFormatter() {
 	let secondBlock = `<p>${descriptions[0]
 		.map((e) => {
 			let element = e.trim()
-			return element.split('')[element.length - 1] !== '.'
+			let lastSymbol = element.split('')[element.length - 1]
+			return lastSymbol !== '.' && lastSymbol !== '!' && lastSymbol !== '?'
 				? `${element.trim()}.`
 				: element
 		})
