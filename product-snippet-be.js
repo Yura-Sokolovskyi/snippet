@@ -307,6 +307,7 @@ async function parseDataToArray() {
 		copydeckAllData.push(column.split('\t'))
 	}
 	copydeckData = copydeckAllData[0]
+	console.log(copydeckData)
 }
 
 async function initFields(fields, flag) {
@@ -696,7 +697,7 @@ function buyNowFusepumpFormatter() {
 
 function newsletterFormatter() {
 	const copydecPetType = copydeckData[16]
-	const copydecNewsletter = copydeckData[74]
+	const copydecNewsletter = copydeckData[75]
 
 	return copydecPetType && copydecNewsletter
 		? [copydecPetType, copydecNewsletter]
@@ -719,7 +720,7 @@ function highlightsFormatter() {
 
 	let highlights = []
 
-	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
+	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 2) {
 		const highlight = copydeckData[i]
 			.split(/([*][A-Za-z])/gm)[0]
 			.replace(/["\n]/gm, '')
@@ -750,7 +751,7 @@ function productSizeFormatter() {
 				if (val.includes('x')) {
 					return `${val.replace(/[^x0-9\s]/gi, '')}g`
 				} else if (val.includes('kg')) {
-					let parsedVal = parseInt(val.replace(/[^0-9]/gi, ''))
+					let parsedVal = val.replace(/[^0-9\.]/gi, '')
 					return `${parsedVal}kg`
 				} else {
 					let parsedVal = parseInt(val.replace(/[^0-9]/gi, ''))
@@ -772,7 +773,7 @@ function productOverviewFormatter() {
 	let features = [[], []]
 	let descriptions = [[], []]
 
-	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 3) {
+	for (let i = firstHighlightIndex; i <= lastHighlightIndex; i += 2) {
 		separateDescription(copydeckData[i], features)
 	}
 
@@ -859,8 +860,8 @@ function feedingGuideFormatter() {
 
 /*TAXONOMY FORMATTERS*/
 function petTypeFormatter() {
-	const copydeckFoodTypeLocal = copydeckData[18]
-	return copydeckFoodTypeLocal
+	const copydeckPetType = copydeckData[16]
+	return copydeckPetType
 }
 
 function brandFormatter() {
