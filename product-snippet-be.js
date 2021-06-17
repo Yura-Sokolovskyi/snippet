@@ -286,7 +286,7 @@ snippetAddSeoBtn.addEventListener('click', async function () {
 })
 
 snippetAddAllBtn.addEventListener('click', async function () {
-	snippetLoaderContainer.style.display = 'flex'
+	//snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
 	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
@@ -361,7 +361,6 @@ async function setAuthor() {
  *Function for editing block like "PRODUCT OVERVIEW" or "INGREDIENTS & NUTRITION"
  **/
 async function editEditorsGroup(node, values, numberOfFields = values.length) {
-	console.log(node)
 	const btnNode = node.querySelector('input.paragraphs-icon-button')
 
 	let flag = btnNode.value === 'Edit'
@@ -425,6 +424,8 @@ async function editInputsGroup(node, values, numberOfFields = values.length) {
 					value
 				)
 			} else {
+				highlightInputs[index].focus()
+				highlightInputs[index].blur()
 				await editInput(highlightInputs[index].parentElement, value)
 			}
 		}
@@ -680,7 +681,10 @@ function bazaavoiceProductIDFormatter() {
 }
 
 function GTINFormatter() {
-	const copydeckGTIN = copydeckData[9].replace(/[^0-9]/gm, '').trim()
+	const copydeckGTIN = copydeckData[9]
+		.split(' ')[0]
+		.replace(/[^0-9]/gm, '')
+		.trim()
 	return copydeckGTIN.length > 0 && copydeckGTIN !== '0' ? copydeckGTIN : ''
 }
 
