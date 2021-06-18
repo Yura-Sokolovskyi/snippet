@@ -368,6 +368,10 @@ async function editEditorsGroup(node, values, numberOfFields = values.length) {
 	if (flag) {
 		clickElement(btnNode)
 		await checkNodeChanges(node)
+	} else {
+		node
+			.querySelector('iframe')
+			.contentWindow.document.querySelector('body').innerHTML = values[0]
 	}
 
 	const numberOfExtraFields =
@@ -395,7 +399,10 @@ async function editEditorsGroup(node, values, numberOfFields = values.length) {
 	}
 
 	async function waitForChanges() {
-		let blockList = node.querySelectorAll('.ajax-new-content .draggable')
+		let blockList = flag
+			? node.querySelectorAll('.ajax-new-content .draggable')
+			: node.querySelectorAll('.draggable')
+
 		await checkNodeChanges(blockList[blockList.length - 1])
 	}
 }
