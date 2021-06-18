@@ -286,7 +286,7 @@ snippetAddSeoBtn.addEventListener('click', async function () {
 })
 
 snippetAddAllBtn.addEventListener('click', async function () {
-	//snippetLoaderContainer.style.display = 'flex'
+	snippetLoaderContainer.style.display = 'flex'
 	await parseDataToArray()
 	await initFields(config.customFields, initCustomFieldsFlag)
 	await editFields(config.customFields)
