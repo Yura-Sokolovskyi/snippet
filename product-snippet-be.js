@@ -663,18 +663,7 @@ function externalTitleFormatter() {
 	const copydeckTitle = copydeckData[5].trim()
 	const copydeckBrand = copydeckData[14].trim()
 
-	if (copydeckTitle && copydeckBrand) {
-		const length = copydeckTitle
-			.toLowerCase()
-			.split(copydeckBrand.toLowerCase())[1]
-			.replace(/[^a-z\s]/gi, '').length
-		return length
-			? `${copydeckTitle.substring(0, copydeckBrand.length)}® ${copydeckTitle
-					.substring(copydeckTitle.length - length, copydeckTitle.length)
-					.trim()}`
-			: ''
-	}
-	return ''
+	return copydeckTitle ? copydeckTitle : ''
 }
 
 function bazaavoiceProductIDFormatter() {
