@@ -536,6 +536,8 @@ async function editSelectsGroup(node, values, numberOfFields = values.length) {
 		for (const [index, container] of selectContainers.entries()) {
 			if (values[index]) {
 				await editSelect(container, values[index])
+			} else {
+				await editSelect(container, ['- None -'])
 			}
 		}
 	}
@@ -697,7 +699,7 @@ function buyNowFusepumpFormatter() {
 
 function newsletterFormatter() {
 	const copydecPetType = copydeckData[16]
-	const copydecNewsletter = copydeckData[76]
+	const copydecNewsletter = copydeckData[75]
 
 	return copydecPetType && copydecNewsletter
 		? [copydecPetType, copydecNewsletter]
