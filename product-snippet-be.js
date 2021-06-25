@@ -868,7 +868,7 @@ function brandFormatter() {
 
 function categoriesFormatter() {
 	const copydeckPetType = copydeckData[16]
-	const copydeckFoodTypeLocal = copydeckData[18]
+	const copydeckFoodTypeLocal = copydeckData[21]
 
 	return [[copydeckPetType, copydeckFoodTypeLocal]]
 }
